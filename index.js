@@ -2,11 +2,13 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const { getTopTracks } = require("./controllers/tracksController");
-const { getAccessToken } = require("./controllers/authenticateUser");
+const { loginUser, getAccessToken } = require("./controllers/authUser");
 const app = express();
 
 app.use(express.json());
 app.use(cors());
+
+app.get("/login", loginUser);
 
 app.get("/callback", getAccessToken);
 
