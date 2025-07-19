@@ -1,7 +1,11 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const { getTracks, pauseCurrentSong } = require("./controllers/tracksController");
+const {
+  getTracks,
+  pauseCurrentSong,
+  playTopTenTrack,
+} = require("./controllers/tracksController");
 const { loginUser, getAccessToken } = require("./controllers/authUser");
 const app = express();
 
@@ -14,7 +18,9 @@ app.get("/callback", getAccessToken);
 
 app.get("/spotify", getTracks);
 
-app.get("/spotify/pause", pauseCurrentSong);
+app.put("/spotify/pause", pauseCurrentSong);
+
+app.put("/spotify/play", playTopTenTrack);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
