@@ -1,6 +1,6 @@
 const axiosInstance = require("../lib/axios.lib");
 
-const getTopTracks = async (req, res) => {
+const getTracks = async (req, res) => {
   try {
     const topTracks = await axiosInstance.get(
       "/v1/me/top/tracks?time_range=long_term&limit=10"
@@ -33,4 +33,20 @@ const getTopTracks = async (req, res) => {
   }
 };
 
-module.exports = { getTopTracks };
+const pauseCurrentSong = async (req, res) => {
+  try {
+    await axiosInstance.put("/v1/me/player/pause");
+
+    res.status(200).json({ message: "Playback paused successfully" });
+  } catch (error) {
+    if (error.status === 404) {
+      return res
+        .status(404)
+        .json({ error: "No song is currently being played." });
+    }
+
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = { getTracks, pauseCurrentSong };

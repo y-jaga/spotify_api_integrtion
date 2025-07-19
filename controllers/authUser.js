@@ -10,7 +10,8 @@ const redirect_uri = process.env.SPOTIFY_REDIRECT_URI;
 const loginUser = async (req, res) => {
   try {
     const state = generateRandomString(16);
-    const scope = "user-read-private user-read-email";
+    const scope =
+      "user-top-read user-read-currently-playing user-read-playback-state user-modify-playback-state";
     res.redirect(
       "https://accounts.spotify.com/authorize?" +
         querystring.stringify({
